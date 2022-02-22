@@ -3,6 +3,35 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
+
+  const convertUserInput = async (event) => {
+    event.preventDefault(); // Prevent page refresh
+
+    // Call the internal API with a POST request
+
+    const response = await fetch(
+      '/api/convert',
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          num: event.target.num.value
+        }),
+        method: 'POST'
+      }
+    )
+
+    // The result is the response from the API (converted to the JSON format)
+
+    const result = await response.json();
+
+    console.log(result.num); // Log the correct result/response
+
+    event.target.reset();
+
+
+  }
   return (
     <div className={styles.container}>
       <Head>
@@ -20,9 +49,9 @@ export default function Home() {
         </h2>
 
         <div className={styles.wrapper}>
-          <form className={styles.form}>
-            <label htmlFor="user-input-number" className={styles.label}>Enter a number:</label>
-            <input type="text" id="user-input-number" name="user-input-number" />
+          <form onSubmit={convertUserInput} className={styles.form}>
+            <label htmlFor="num" className={styles.label}>Enter a number:</label>
+            <input type="text" id="num" name="num" required />
           </form> 
 
           <button className={styles.submit} type="submit">Submit</button>
