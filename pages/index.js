@@ -4,6 +4,8 @@ import styles from '../styles/Home.module.css'
 
 export default function Home() {
 
+  // For form submissions (when user presses enter)
+
   const convertUserInput = async (event) => {
     event.preventDefault(); // Prevent page refresh
 
@@ -30,6 +32,31 @@ export default function Home() {
 
     event.target.reset();
   }
+
+  // For click events (when user uses the cursor to press the submit button)
+
+  const generateResult = async () => {
+    let userInput = document.getElementById('num').value;
+
+    const resp = await fetch(
+      '/api/convert',
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          num: userInput
+        }),
+        method: 'POST'
+      }
+    )
+
+    const clickResult = await resp.json();
+    document.getElementById('output').textContent = clickResult.conversion;
+    document.getElementById('num').value = '';
+  }
+
+
   return (
     <div className={styles.container}>
       <Head>
@@ -52,8 +79,8 @@ export default function Home() {
             <input className={styles.input} type="text" id="num" name="num" required />
           </form> 
 
-          <button className={styles.submit} type="submit">Submit</button>
-          
+          <button className={styles.submit} type="submit" onClick={generateResult}>Submit</button>
+
           <p className={styles.output} id="output"></p>
 
         </div>

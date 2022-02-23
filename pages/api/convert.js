@@ -164,7 +164,8 @@ export default function handler(req, res) {
             result = sum;
         }
 
-        // Ensure that an empty array is not returned if an incorrect input is given
+        // Ensure that an error message is returned
+        // instead of an empty array in case an invalid user input is given
 
         if(result.length === 0) {
             return 'There was an error with your input. Please try again.'
