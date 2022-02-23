@@ -1,34 +1,29 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Roman Numeral/Integer Converter
 
-## Getting Started
+## Overview
 
-First, run the development server:
+This is a Next.js app that converts Roman Numerals to their respective integer values, and integers to their respective Roman Numerals. It currently works for numbers between 1-1000.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## Technologies Used
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Node.js
+- Next.js
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Installation
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+This web application is deployed on Heroku: https://vruss14-roman-numerals.herokuapp.com/
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Alternatively, the web application can be run in a local environment by cloning the repository, navigating to the correct folder, then running ```npm run dev``` to start the server. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## Usage
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The webpage includes responsive design and can be viewed on all devices.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Below is a screenshot of the desktop version of the page:
 
-## Deploy on Vercel
+![Roman Numeral Site on Desktop](roman-numerals-screenshot.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Credits
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Valerie Russell was the sole contributor to this project. Contact her at vruss14@gmail.com.
