@@ -102,7 +102,7 @@ export default function handler(req, res) {
         function convertToInteger(str) {
 
             let originalStr = str;
-            let adjustedStr = originalStr; // Substrings are removed as their corresponding numbers are added to numbersArr
+            let adjustedStr = originalStr.toUpperCase(); // Substrings are removed as their corresponding numbers are added to numbersArr
             let numbersArr = [];
 
             do {
