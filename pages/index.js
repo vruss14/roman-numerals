@@ -26,12 +26,9 @@ export default function Home() {
 
     const result = await response.json();
 
-    console.log(result.num); // Log the correct result/response
-    console.log(result.conversion);
+    document.getElementById('output').textContent = result.conversion;
 
     event.target.reset();
-
-
   }
   return (
     <div className={styles.container}>
@@ -56,6 +53,8 @@ export default function Home() {
           </form> 
 
           <button className={styles.submit} type="submit">Submit</button>
+
+          <p className={styles.output} id="output"></p>
         </div>
       </main>
 

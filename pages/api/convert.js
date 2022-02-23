@@ -16,6 +16,18 @@ export default function handler(req, res) {
         function convertToRomanNumeral(num) {
 
             let startingNum = num;
+
+            // Ensure that the given number is within the correct range
+
+            if(num > 1000) {
+                result = 'Your number is too large. Please try again.'
+                return;
+            }
+
+            if (num <= 0) {
+                result = 'There are no Roman Numerals for numbers less than or equal to 0.'
+            }
+
             let adjustedNum = startingNum; // Will be decremented; begins as the same as starting number
 
             // Breaking down a number into its subcomponents
@@ -148,7 +160,7 @@ export default function handler(req, res) {
             for(let i=0; i < numbersArr.length; i++) {
                 sum += numbersArr[i]
             }
-            
+
             result = sum;
         }
 
