@@ -5,6 +5,8 @@ export default function handler(req, res) {
     function convertInput() {
         let result = [];
 
+        // Determine whether the user has entered an integer or string based on if parseInt returns true
+
         if(parseInt(userInput)) {
             convertToRomanNumeral(userInput);
         } else {
@@ -16,7 +18,7 @@ export default function handler(req, res) {
             let startingNum = num;
             let adjustedNum = startingNum; // Will be decremented; begins as the same as starting number
 
-            // Breaking down a number into subcomponents
+            // Breaking down a number into its subcomponents
 
             let thousands;
             let fiveHundreds;
@@ -65,7 +67,7 @@ export default function handler(req, res) {
                 } else if (ones === 9) {
                     result.push('IX');
                     adjustedNum -= 9;
-                } else if(ones >= 5) {
+                } else if(fives >= 1) {
                     result.push('V');
                     adjustedNum -= 5;
                 } else if(ones === 4) {
@@ -85,12 +87,78 @@ export default function handler(req, res) {
             return result;
         }
     
-        function convertToInteger(num) {
-            console.log('CONVERT TO INTEGER')
+        function convertToInteger(str) {
+
+            let originalStr = str;
+            let adjustedStr = originalStr; // Substrings are removed as their corresponding numbers are added to numbersArr
+            let numbersArr = [];
+
+            do {
+
+                // Order is not from greatest to lowest value in this case
+                // When two substrings use the same letter, the more specific substring needs to come first in the logic
+
+                if(adjustedStr.includes('CM')) {
+                    numbersArr.push(900);
+                    adjustedStr = adjustedStr.replace('CM', '');
+                } else if (adjustedStr.includes('M')) {
+                    numbersArr.push(1000);
+                    adjustedStr = adjustedStr.replace('M', '')
+                } else if (adjustedStr.includes('CD')) {
+                    numbersArr.push(400);
+                    adjustedStr = adjustedStr.replace('CD', '');
+                } else if (adjustedStr.includes('D')) {
+                    numbersArr.push(500);
+                    adjustedStr = adjustedStr.replace('D', '');
+                } else if (adjustedStr.includes('XC')) {
+                    numbersArr.push(90);
+                    adjustedStr = adjustedStr.replace('XC', '');
+                } else if (adjustedStr.includes('C')) {
+                    numbersArr.push(100);
+                    adjustedStr = adjustedStr.replace('C', '');
+                } else if (adjustedStr.includes('XL')) {
+                    numbersArr.push(40);
+                    adjustedStr = adjustedStr.replace('XL', '');
+                } else if (adjustedStr.includes('L')) {
+                    numbersArr.push(50);
+                    adjustedStr = adjustedStr.replace('L', '');
+                } else if (adjustedStr.includes('IX')) {
+                    numbersArr.push(9);
+                    adjustedStr = adjustedStr.replace('IX', '');
+                } else if (adjustedStr.includes('X')) {
+                    numbersArr.push(10);
+                    adjustedStr = adjustedStr.replace('X', '');
+                } else if (adjustedStr.includes('IV')) {
+                    numbersArr.push(4);
+                    adjustedStr = adjustedStr.replace('IV', '');
+                } else if (adjustedStr.includes('V')) {
+                    numbersArr.push(5);
+                    adjustedStr = adjustedStr.replace('V', '');
+                } else if (adjustedStr.includes('I')) {
+                    numbersArr.push(1);
+                    adjustedStr = adjustedStr.replace('I', '');
+                } else {
+                    return;
+                }
+            }
+            while (adjustedStr.length > 0);
+
+            let sum = 0;
+
+            for(let i=0; i < numbersArr.length; i++) {
+                sum += numbersArr[i]
+            }
+            
+            result = sum;
         }
 
-        return result;
+        // Ensure that an empty array is not returned if an incorrect input is given
 
+        if(result.length === 0) {
+            return 'There was an error with your input. Please try again.'
+        } else {
+            return result;
+        }
     }
 
     res.status(200).json({ num: req.body.num, conversion: convertInput() })
