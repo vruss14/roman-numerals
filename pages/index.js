@@ -27,6 +27,7 @@ export default function Home() {
     const result = await response.json();
 
     console.log(result.num); // Log the correct result/response
+    console.log(result.conversion);
 
     event.target.reset();
 
