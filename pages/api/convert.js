@@ -1,9 +1,12 @@
 export default function handler(req, res) {
-
     const userInput = req.body.num;
 
     function convertInput() {
         let result = [];
+
+        if (userInput === '0') {
+            return result = 'There is no Roman Numeral equivalent for 0.'
+        }
 
         // Determine whether the user has entered an integer or string based on if parseInt returns true
 
@@ -15,142 +18,49 @@ export default function handler(req, res) {
     
         function convertToRomanNumeral(num) {
 
-            let startingNum = num;
-
-            // Ensure that the given number is within the correct range
-
             if(num > 1000) {
                 result = 'Your number is too large. Please try again.'
                 return;
             }
 
-            if (num <= 0) {
-                result = 'There are no Roman Numerals for numbers less than or equal to 0.'
+            if (num < 0) {
+                result = 'There are no Roman Numerals for negative values.'
+                return;
             }
 
-            let adjustedNum = startingNum; // Will be decremented; begins as the same as starting number
-
-            // Breaking down a number into its subcomponents
-
-            let thousands;
-            let fiveHundreds;
-            let hundreds;
-            let fifties;
-            let tens;
-            let fives;
-            let ones;
+            let adjustedNum = num;
+            let integers = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+            let romanNumerals = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I']
 
             do {
-                thousands = Math.floor(adjustedNum / 1000);
-                fiveHundreds = Math.floor(adjustedNum / 500);
-                hundreds = Math.floor(adjustedNum / 100);
-                fifties = Math.floor(adjustedNum / 50);
-                tens = Math.floor(adjustedNum / 10);
-                fives = Math.floor(adjustedNum / 5);
-                ones = adjustedNum % 10;
-
-                if(thousands === 1) {
-                    result.push('M');
-                    adjustedNum -= 1000;
-                } else if (hundreds === 9) {
-                    result.push('CM');
-                    adjustedNum -= 900;
-                } else if (fiveHundreds >= 1) {
-                    result.push('D');
-                    adjustedNum -= 500;
-                } else if(hundreds === 4) {
-                    result.push('CD')
-                    adjustedNum -= 400;
-                } else if (hundreds >= 1) {
-                    result.push('C');
-                    adjustedNum -= 100;
-                } else if(tens === 9) {
-                    result.push('XC');
-                    adjustedNum -= 90;
-                } else if(fifties >= 1) {
-                    result.push('L');
-                    adjustedNum -= 50;
-                } else if (tens === 4) {
-                    result.push('XL');
-                    adjustedNum -= 40;
-                } else if (tens >= 1) {
-                    result.push('X');
-                    adjustedNum -= 10;
-                } else if (ones === 9) {
-                    result.push('IX');
-                    adjustedNum -= 9;
-                } else if(fives >= 1) {
-                    result.push('V');
-                    adjustedNum -= 5;
-                } else if(ones === 4) {
-                    result.push('IV');
-                    adjustedNum -= 4;
-                } else if(ones >= 1) {
-                    result.push('I')
-                    adjustedNum -=1;
-                } else {
-                    return;
+                for (let i=0; i < integers.length; i++) {
+                    if(adjustedNum >= integers[i]) {
+                        result.push(romanNumerals[i]);
+                        adjustedNum -= integers[i];
+                        i -= 1;
+                    }
                 }
-
             }
-            while (adjustedNum > 0);
+            while (adjustedNum > 0)
 
             result = result.join('')
             return result;
+
         }
     
         function convertToInteger(str) {
-
-            let originalStr = str;
-            let adjustedStr = originalStr.toUpperCase(); // Substrings are removed as their corresponding numbers are added to numbersArr
+            let adjustedStr = str.toUpperCase();
+            let integers = [900, 1000, 400, 500, 90, 100, 40, 50, 9, 10, 4, 5, 1]; // Note different order (to match romanNumerals arr)
+            let romanNumerals = ['CM', 'M', 'CD', 'D', 'XC', 'C', 'XL', 'L', 'IX', 'X', 'IV', 'V', 'I'] // Specific substrings come first
             let numbersArr = [];
 
             do {
-
-                // Order is not from greatest to lowest value in this case
-                // When two substrings use the same letter, the more specific substring needs to come first in the logic
-
-                if(adjustedStr.includes('CM')) {
-                    numbersArr.push(900);
-                    adjustedStr = adjustedStr.replace('CM', '');
-                } else if (adjustedStr.includes('M')) {
-                    numbersArr.push(1000);
-                    adjustedStr = adjustedStr.replace('M', '')
-                } else if (adjustedStr.includes('CD')) {
-                    numbersArr.push(400);
-                    adjustedStr = adjustedStr.replace('CD', '');
-                } else if (adjustedStr.includes('D')) {
-                    numbersArr.push(500);
-                    adjustedStr = adjustedStr.replace('D', '');
-                } else if (adjustedStr.includes('XC')) {
-                    numbersArr.push(90);
-                    adjustedStr = adjustedStr.replace('XC', '');
-                } else if (adjustedStr.includes('C')) {
-                    numbersArr.push(100);
-                    adjustedStr = adjustedStr.replace('C', '');
-                } else if (adjustedStr.includes('XL')) {
-                    numbersArr.push(40);
-                    adjustedStr = adjustedStr.replace('XL', '');
-                } else if (adjustedStr.includes('L')) {
-                    numbersArr.push(50);
-                    adjustedStr = adjustedStr.replace('L', '');
-                } else if (adjustedStr.includes('IX')) {
-                    numbersArr.push(9);
-                    adjustedStr = adjustedStr.replace('IX', '');
-                } else if (adjustedStr.includes('X')) {
-                    numbersArr.push(10);
-                    adjustedStr = adjustedStr.replace('X', '');
-                } else if (adjustedStr.includes('IV')) {
-                    numbersArr.push(4);
-                    adjustedStr = adjustedStr.replace('IV', '');
-                } else if (adjustedStr.includes('V')) {
-                    numbersArr.push(5);
-                    adjustedStr = adjustedStr.replace('V', '');
-                } else if (adjustedStr.includes('I')) {
-                    numbersArr.push(1);
-                    adjustedStr = adjustedStr.replace('I', '');
-                } else {
-                    return;
+                for(let i=0; i < romanNumerals.length; i++) {
+                    if(adjustedStr.includes(romanNumerals[i])) {
+                        numbersArr.push(integers[i])
+                        adjustedStr = adjustedStr.replace(romanNumerals[i], '')
+                        i -= 1;
+                    }
                 }
             }
             while (adjustedStr.length > 0);
@@ -161,17 +71,19 @@ export default function handler(req, res) {
                 sum += numbersArr[i]
             }
 
+            if (sum > 1000) {
+                return result = 'Your number is too large. Please try again.'
+            }
+
             result = sum;
         }
 
-        // Ensure that an error message is returned
-        // instead of an empty array in case an invalid user input is given
+        // Ensure that an error message is returned instead of an empty array in cases of invalid user input
 
         if(result.length === 0) {
             return 'There was an error with your input. Please try again.'
-        } else {
-            return result;
-        }
+        } 
+        return result;
     }
 
     res.status(200).json({ num: req.body.num, conversion: convertInput() })
